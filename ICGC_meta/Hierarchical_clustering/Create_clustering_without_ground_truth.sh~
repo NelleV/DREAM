@@ -1,0 +1,9 @@
+#!/bin/bash
+
+FILES=$(ls ../SNVCall*)
+for call in $FILES;do
+	echo $call
+	sparename=$(echo $call | sed "s|\.\.\/||g" | sed "s|\.txt||g")
+	echo $sparename
+	echo "cd /data/tmp/2015_dream_challenge_meta_smc_dna/dream_data/Clustering_Paul/;/bioinfo/local/R/bin/R < /data/tmp/2015_dream_challenge_meta_smc_dna/dream_data/Clustering_Paul/Create_clustering.R $call $sparename --no-save" |  qsub -q batch -o /data/tmp/2015_dream_challenge_meta_smc_dna/dream_data/Clustering_Paul -j oe -N $sparename -M paul.deveau@curie.fr -l nodes=1:ppn=1,mem=8Gb,walltime=0:30:00
+done
